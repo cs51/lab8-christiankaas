@@ -131,11 +131,9 @@ unregisters the listener with that id from the event if there is
 one. If there is no listener with that id, do nothing.
 ......................................................................*)
             
-  let remove_listener (evt : 'a event) (i : id) : unit =
-    let new_lst =
-      List.filter (fun event -> event.id <> i) !evt
-    in
-    evt := new_lst
+  let remove_listener (e : 'a event) (i : id) : unit =
+    let _, b = List.partition (fun event -> event.id = i) !e in
+    e := b
 
 (*......................................................................
 Exercise 3: Write fire_event, which will execute all event handlers
